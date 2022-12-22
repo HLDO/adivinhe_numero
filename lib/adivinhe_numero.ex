@@ -13,7 +13,6 @@ defmodule AdivinheNumero do
     |> parse_input()
     |> pickup_number()
     |> play()
-    |> IO.inspect()
   end
 
   def pickup_number(level) do
@@ -28,12 +27,14 @@ defmodule AdivinheNumero do
     |> adivinhe_numero(picked_num, 1)
   end
 
+  # Utilização de Guards
   def adivinhe_numero(usr_adivinhe_numero, picked_num, count) when usr_adivinhe_numero > picked_num do
     IO.gets("[Computador] Muito alto. Tente novamente: ")
     |> parse_input()
     |> adivinhe_numero(picked_num, count + 1)
   end
 
+  # Utilização de Guards
   def adivinhe_numero(usr_adivinhe_numero, picked_num, count) when usr_adivinhe_numero < picked_num do
     IO.gets("[Computador] Muito baixo. Tente novamente: ")
     |> parse_input()
@@ -42,6 +43,25 @@ defmodule AdivinheNumero do
 
   def adivinhe_numero(_usr_adivinhe_numero, _picked_num, count) do
     IO.puts("[Computador] Você acertou em #{count} tentativa(s)!")
+    show_score(count)
+  end
+
+  # Utilização de Guards
+  def show_score(tries) when tries > 6 do
+    IO.puts("[Computador] Mais de 6 tentativas... Mais sorte na próxima.")
+  end
+
+  def show_score(tries) do
+    {_, msg} = %{1..1 => "Acertou de primeira!!!",
+      2..4 => "Boa!",
+      5..6 => "Você pode fazer melhor do que isso."}
+      # _ => "Mais sorte na próxima."}
+      # Percorre os elementos no map acima
+      |> Enum.find(fn {range, _} ->
+        # Verifica se o valor de tries faz parte de um dos itens de range
+        Enum.member?(range, tries)
+      end)
+    IO.puts("[Computador] #{msg}")
   end
 
   def parse_input(:error) do
