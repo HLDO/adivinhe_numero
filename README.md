@@ -1,6 +1,6 @@
 # AdivinheNumero
 
-**TODO: Add description**
+**Jogo teste para estudo na linguagem Elixir**
 
 ## Installation
 

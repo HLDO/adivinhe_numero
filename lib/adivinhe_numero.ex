@@ -25,23 +25,23 @@ defmodule AdivinheNumero do
   def play(picked_num) do
     IO.gets("[Computador] Eu escolhi um número. Qual número eu escolhi? ")
     |> parse_input()
-    |> adivinhe_numero(picked_num)
+    |> adivinhe_numero(picked_num, 1)
   end
 
-  def adivinhe_numero(usr_adivinhe_numero, picked_num) when usr_adivinhe_numero > picked_num do
+  def adivinhe_numero(usr_adivinhe_numero, picked_num, count) when usr_adivinhe_numero > picked_num do
     IO.gets("[Computador] Muito alto. Tente novamente: ")
     |> parse_input()
-    |> adivinhe_numero(picked_num)
+    |> adivinhe_numero(picked_num, count + 1)
   end
 
-  def adivinhe_numero(usr_adivinhe_numero, picked_num) when usr_adivinhe_numero < picked_num do
+  def adivinhe_numero(usr_adivinhe_numero, picked_num, count) when usr_adivinhe_numero < picked_num do
     IO.gets("[Computador] Muito baixo. Tente novamente: ")
     |> parse_input()
-    |> adivinhe_numero(picked_num)
+    |> adivinhe_numero(picked_num, count + 1)
   end
 
-  def adivinhe_numero(_usr_adivinhe_numero, _picked_num) do
-    IO.puts("[Computador] Você acertou!")
+  def adivinhe_numero(_usr_adivinhe_numero, _picked_num, count) do
+    IO.puts("[Computador] Você acertou em #{count} tentativa(s)!")
   end
 
   def parse_input(:error) do
